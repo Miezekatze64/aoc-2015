@@ -104,21 +104,21 @@ public class Main {
     }
 
     public record Ingredient(String name, int capacity, int durability, int flavor, int texture, int calories) {
-    public int get(int index) {
-        switch (index) {
-        case 0:
-            return capacity;
-        case 1:
-            return durability;
-        case 2:
-            return flavor;
-        case 3:
-            return texture;
-        case 4:
-            return calories;
-        default:
-            return -1;
+        public int get(int index) {
+            switch (index) {
+            case 0:
+                return capacity;
+            case 1:
+                return durability;
+            case 2:
+                return flavor;
+            case 3:
+                return texture;
+            case 4:
+                return calories;
+            default:
+                return -1;
+            }
         }
-    }
     }
 }
