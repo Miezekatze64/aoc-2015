@@ -52,35 +52,38 @@ public class Main {
         molecules.add(molecule);
         int count = 0;
         while (!contains(molecules, split(med))) {
-            int size = molecules.size();
-            var mol2 = new HashSet<String[]>(molecules);
-
+            final int size = molecules.size();
+            final var mol2 = new HashSet<String[]>(molecules);
+            final var list = mol2.stream().toList();
             for (int i = 0; i < size; i++) {
-                molecules.addAll(step(mol2.stream().toList().get(i)));
+                step(list.get(i), molecules);
+                molecules.remove(list.get(i));
             }
+
+            System.out.println(list.get(0).length);
+
             count++;
         }
         return count;
     }
 
     protected boolean contains(HashSet<String[]> set, String[] arr) {
+        var list = set.stream().toList();
         for (int i = 0; i < set.size(); i++) {
-            String[] fst = set.stream().toList().get(i);
+            String[] fst = list.get(i);
             if (Arrays.equals(fst, arr)) return true;
         }
         return false;
     }
 
-    protected HashSet<String[]> step(String[] arr) {
-        var list = new HashSet<String[]>();
+    protected void step(String[] arr, HashSet<String[]> set) {
         for (int i = 0; i < arr.length; i++) {
             for (String s : getReplacements(replacements, arr[i])) {
-                list.add(replace(arr, i, split(s)));
+                String[] arr2 = replace(arr, i, split(s));
+                set.add(arr2);
             }
         }
-        return list;
     }
-
 
     protected HashSet<String> generate(String[] arr) {
         HashSet<String> list = new HashSet<>();
