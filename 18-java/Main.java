@@ -102,7 +102,7 @@ public class Main {
                 Runtime.getRuntime().exec("cls");
             } catch (Exception e) {}
         } else {
-            System.out.print("\033[H\033[2J\033[3J");
+            System.out.print("\033[H");
         }
     }
 
@@ -110,9 +110,9 @@ public class Main {
         clear();
         for (boolean[] line : cells) {
             for (boolean cell : line) {
-                System.out.print(cell?"#":" ");
+                System.out.print(cell?'\u25A0':' ');
             }
-            System.out.print('\n');
+            System.out.print("\r\n\r");
         }
     }
 
