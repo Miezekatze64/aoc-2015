@@ -28,64 +28,21 @@ public class Main {
         System.out.println("Part 2: " + part2(start));
     }
     
-    protected int countReplacements(String str) {
-        return getReplacements(replacements, str).length;
-    }
-
-    protected String[] replace(String[] list, int index, String[] value) {
-        String[] res = new String[list.length+value.length-1];
-        for (int i = 0; i < index; i++) {
-            res[i] = list[i];
-        }
-        for (int i = index; i < index+value.length; i++) {
-            res[i] = value[i-index];
-        }
-        for (int i = index+value.length; i < value.length + list.length -1; i++) {
-            res[i] = list[i-value.length];
-        }
-        return res;
-    }
-
-    protected int part2(String med) {
-        String[] molecule = new String[]{"e"};
-        HashSet<String[]> molecules = new HashSet<>();
-        molecules.add(molecule);
+    protected int count(String[] search, String str) {
         int count = 0;
-        while (!contains(molecules, split(med))) {
-            final int size = molecules.size();
-            final var mol2 = new HashSet<String[]>(molecules);
-            final var list = mol2.stream().toList();
-            for (int i = 0; i < size; i++) {
-                step(list.get(i), molecules);
-                molecules.remove(list.get(i));
-            }
-
-            System.out.println(list.get(0).length);
-
-            count++;
-        }
+        for (String s : search) if (str.equals(s)) count++;
         return count;
     }
 
-    protected boolean contains(HashSet<String[]> set, String[] arr) {
-        var list = set.stream().toList();
-        for (int i = 0; i < set.size(); i++) {
-            String[] fst = list.get(i);
-            if (Arrays.equals(fst, arr)) return true;
-        }
-        return false;
+    protected int part2(String med) {
+        var molecule = split(med);
+        return molecule.length //length
+            - 2*count(molecule, "Rn")   // Rn and Ar are grouping elements and are never on the left side
+            - 2*count(molecule, "Y")    // seperator between two grouped elements
+            - 1;                        // electron
     }
 
-    protected void step(String[] arr, HashSet<String[]> set) {
-        for (int i = 0; i < arr.length; i++) {
-            for (String s : getReplacements(replacements, arr[i])) {
-                String[] arr2 = replace(arr, i, split(s));
-                set.add(arr2);
-            }
-        }
-    }
-
-    protected HashSet<String> generate(String[] arr) {
+    private HashSet<String> generate(String[] arr) {
         HashSet<String> list = new HashSet<>();
         for (int index = 0; index < arr.length; index++) {
             for (String s : getReplacements(replacements, arr[index])) {
@@ -103,7 +60,7 @@ public class Main {
         return list;
     }
 
-    protected String[] getReplacements(LinkedList<Replacement> replacements, String key) {
+    private String[] getReplacements(LinkedList<Replacement> replacements, String key) {
         LinkedList<String> list = new LinkedList<String>();
         replacements.forEach((Replacement s) -> {
             if (s.key().equals(key)) {
@@ -113,7 +70,7 @@ public class Main {
         return list.toArray(new String[0]);
     }
 
-    protected String[] split(String s) {
+    private String[] split(String s) {
         LinkedList<String> result = new LinkedList<>();
         String tmp = "";
 
