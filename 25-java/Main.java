@@ -3,10 +3,6 @@ public class Main {
     public static final int COL = 3019;
 
     public static void main(String[] args) {
-        new Main();
-    }
-
-    public Main() {
         int x = 1;
         int y = 1;
         long val = 20151125L;
@@ -24,7 +20,7 @@ public class Main {
         System.out.println("Part 1: " + val);
     }
 
-    private long next(long prev) {
+    private static long next(long prev) {
         return (prev*252533L)%33554393L;
     }
 }
