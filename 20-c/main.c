@@ -2,8 +2,7 @@
 #include <stdio.h>
 
 int min(int a, int b) {
-    if (a < b) return a;
-    return b;
+    return (a < b)?a:b;
 }
 
 void main(int argc, char **argv) {
