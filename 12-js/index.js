@@ -1,6 +1,3 @@
-//@ts-ignore
-//@ts-nocheck
-
 const {readFileSync} = require('fs');
 const content = readFileSync("./input.txt");
 const json = JSON.parse(content);
